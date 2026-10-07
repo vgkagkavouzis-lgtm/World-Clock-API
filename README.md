@@ -1,2 +1,6 @@
 # World-Clock-API
-API based clock with all available timezones
+
+Real-time time values from all Worldwide available timezones
+
+Feature of adding/deleting favorite zones.
+
