@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get time with API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div id="12hour">
+            <button></button>
+        </div>
+        <!-- <button class="night-mode"></button> -->
+    </nav>
+    <section id="header">
+        <h1>What time is it?</h1>
+        <div class="local-time">
+            <h4>Local Time:</h4>
+            <p id="localTime">info
+                <span id="localTime"></span>
+                <span id="localPeriod"></span>
+            </p>
+        </div>
+    </section>
+    <section>
+        <div class="input">
+            <form action="">
+                <input type="text" placeholder="Search city / country" autocomplete="off" id="searchBar">
+                <div class="suggestions-box"></div>            
+            </form>
+            <label for="timeZoneSelect">
+                <select id="timeZoneSelect">
+                    <option value="Choose a time-zone">Choose a time-zone</option>
+                </select>
+            </label>
+        </div>
+    </section>
+    <section id="display-w-btn">
+        <div class="container-display">
+            <div class="displays">
+                <p><span id="city">City</span>, <span id="country">Country</span></p>
+                <p id="time">Time
+                    <span id="time"></span>
+                    <span id="period"></span>
+                </p>
+                <p id="time-zone">Timezone</p>
+            </div>
+            <div class="add-location">
+                <button class="btn" id="add-location-btn">+ add location</button>
+            </div>
+        </div>
+    </section>
+    <section id="saved-zones">
+        <h3>Saved locations</h3>
+        <ul class="saved-zones-container">
+            <li data-timezone="">
+                <p>
+                    <span class="saved-city">City </span>
+                    <span class="saved-timeZone">Timezone</span>
+                </p>
+                <p>
+                    <span class="saved-time">Time</span>
+                    <span class="saved-period"></span>
+                    <button class="removeBtn btn">x</button>
+                </p>
+            </li>
+        </ul>
+    </section>
+    <div class="assistant-display">
+        <p>Search something</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

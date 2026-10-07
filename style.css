@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto');
+
+* {
+    box-sizing: border-box;
+    margin: 0rem;
+    padding: 0rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    margin: 2rem;
+    max-width: 35rem;
+}
+
+/* ====header div====== */
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.local-time {
+    font-size: small;
+}
+
+
+
+
+
+
+
+
+
+
+div.input {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 15em;
+    height: 5rem;
+
+    margin: 1 0 1 0rem;
+}
+
+div.input form {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 17rem;
+    height: 2rem;
+
+    left: 0;
+    
+}
+
+div.input form input {
+    position: absolute;
+
+    width: 13rem;
+
+    top: 0;
+    left: 0;
+
+    padding: .5rem;
+
+    border: .05rem solid black;
+    border-radius: .2rem;
+}
+
+div.input form input::placeholder {
+    color: rgb(192, 192, 192);
+}
+
+div.input .suggestions-box {
+    display: flex;
+    flex-direction: column;
+    top: 2rem;
+    left: 0;
+
+    width: 17rem;
+    height: 40rem;
+    
+    overflow: auto;
+
+}
+
+div.input label {
+    display: flex;
+    position: absolute;
+    
+    top: 4rem;
+    left: 0;
+
+    margin: 0;
+    padding: 0;
+
+}
+
+div.input label select {
+    border: .05rem solid black;
+    border-radius: .2rem;}
+
+div.input label select {
+    margin: 0;
+}
+
+.suggestions-box {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+    top: 2.2rem;
+}
+
+.suggestions {
+    z-index: 2;
+    padding: .3rem;
+    margin: 0;
+    background-color: white;
+    cursor: pointer;
+}
+
+
+
+div.container-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.displays {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    margin: 2rem 0 4rem 2rem;
+}
+
+
+div.displays #time {
+    font-size: 3rem;
+}
+
+div.displays table {
+    margin: 3rem;
+}
+ /* ========== section saved zones ========== */
+
+.saved-zones-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.saved-zones h3, .saved-zones-container, .saved-zones-container li {
+    margin: .5rem;
+} 
+
+.saved-zones-container li {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn {
+    margin: .5rem;
+}
+
+
+
+
+
+
+.assistant-display, .displays, div.input label {
+    z-index: 1;
+}
+
+
