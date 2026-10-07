@@ -263,25 +263,14 @@ async function updateText (input) {
 
 function dateFormatter (zone) {
     const now = new Date();
-
-        const formatterZone = Intl.DateTimeFormat('en-US', {
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit',
-            hour12: is12hour,
-            timeZone: zone
-        }).formatToParts(now);
-
-        let timeVl = formatterZone.filter(({type}) => ['hour', 'minute', 'second'].includes(type))
-        .map(({value}) => value)
-        .join(':');
-
-        
-
-        return ({timeVl, periodVl});
-
-
-    }
+    const formatterZone = Intl.DateTimeFormat('en-US', {
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: 'true',
+        timeZone: zone
+    }).format(now);
+    return formatterZone;
 }
 
 //selected time zone display
@@ -346,5 +335,4 @@ input.addEventListener('input', () => {
     
     
 })
-
 
