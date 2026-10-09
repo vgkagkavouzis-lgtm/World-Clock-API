@@ -32,14 +32,16 @@ let selectedZone; // assign every time a different zone / string
 let localZone =  Intl.DateTimeFormat().resolvedOptions().timeZone; // find local timezone / string
 let timeoutId; // for running and stopping the function
 
-let is12hour = true;
-const btn12h = document.getElementById('12hour');
+let is12hour; // true or false
+const btn12h = document.getElementById('toggle12hour');
 
 let countriesAndCities; // array for autocomplete / only the names - strings
 let savedLocationsUl = document.querySelector('.saved-zones-container');
 
 loadLocations() // get saved locations from local storage
 renderSavedLocations()
+load12hour() // recover from local storage am / pm
+getTime() // start local clock
 loadZones(); // fetch once in the load page
 
 async function loadZones () {
@@ -55,7 +57,6 @@ async function loadZones () {
         
         output.textContent = 'Data received!'
         zonesData = await res.json();
-        getTime();
         return extractData(zonesData);
         
     } catch (er) {
@@ -107,9 +108,6 @@ function extractData (data) {
 // submit event
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    clearTimeout(timeoutId);
-
 
     const userInput = input.value.trim();
     
@@ -159,21 +157,35 @@ savedLocationsUl.addEventListener('click', (e) => {
 })
 
 // 12hour btn
-btn12h.addEventListener('click', (e) => {
-    e.target.closest('#12hour');
+btn12h.addEventListener('click', () => {
     is12hour = !is12hour;
-    //!jhsdjhhhjjkjhsd
+
+    localStorage.setItem('is12hour', JSON.stringify(is12hour))
+
+    btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
+
+    clearTimeout(timeoutId);
+    getTime();
 })
 
 
+// =========Local Storage==========
 
-
-// save locations to local storage
+// save locations 
 function saveLocations() {
     localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
 }
 
-//load them when page loads
+// load AM / Pm
+function load12hour (){
+    const load12 = JSON.parse(localStorage.getItem('is12hour'));
+    
+    is12hour = load12 ?? true
+
+    btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
+}
+
+//load locations when page loads
 function loadLocations() {
     let storedLocations = localStorage.getItem('savedLocations');
 
@@ -187,6 +199,11 @@ function loadLocations() {
         savedLocations = [];
     }
 }
+
+
+
+
+
 
 // render the li for every 'add location' click
 function renderSavedLocations() {
@@ -208,10 +225,9 @@ function renderSavedLocations() {
         span2.classList.add('saved-timeZone');
         span2.textContent = loc.timeZone;
         span3.classList.add('saved-time');
-        span3.textContent = dateFormatter(loc.timeZone);
+        span3.textContent = dateFormatter(loc.timeZone).timeVl;
         span4.classList.add('saved-period');
-
-        //!add text to span4 for the period
+        span4.textContent = dateFormatter(loc.timeZone).periodVl;
 
         btnRemove.classList.add('removeBtn', 'btn')
         btnRemove.textContent = 'x';
@@ -219,7 +235,8 @@ function renderSavedLocations() {
         savedLocationsUl.append(li);
         li.append(p1, p2);
         p1.append(span1, span2);
-        p2.append(span3, btnRemove);
+        p2.append(span3, span4, btnRemove);
+
         }
     )
 }
@@ -263,26 +280,39 @@ async function updateText (input) {
 
 function dateFormatter (zone) {
     const now = new Date();
-    const formatterZone = Intl.DateTimeFormat('en-US', {
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: 'true',
-        timeZone: zone
-    }).format(now);
-    return formatterZone;
+
+        const formatterZone = Intl.DateTimeFormat('en-US', {
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit',
+            hour12: is12hour,
+            timeZone: zone,
+        }).formatToParts(now);
+
+        let timeVl = formatterZone.filter(({type}) => ['hour', 'minute', 'second'].includes(type))
+        .map(({value}) => value)
+        .join(':');
+
+        let periodVl = formatterZone.find(({type}) => type === 'dayPeriod')?.value;
+
+        return ({timeVl, periodVl})
 }
+
 
 //selected time zone display
 function getTime () {
+    clearTimeout(timeoutId);
+
     //get the local time
-    localTime.textContent = dateFormatter(localZone);
+    localTime.textContent = dateFormatter(localZone).timeVl;
+    localPeriod.textContent = dateFormatter(localZone).periodVl;
     
     if (!selectedZone) {
         output.textContent = 'Search something..'
     } else {
         //update the time
-        time.textContent = dateFormatter(selectedZone);
+        time.textContent = dateFormatter(selectedZone).timeVl;
+        period.textContent = dateFormatter(selectedZone).periodVl;
     }
 
     //update all list/saved items
@@ -299,7 +329,9 @@ function updateSavedTimes () {
     liItems.forEach(li => {
         const zone = li.dataset.timezone;
         const timeDisplay = li.querySelector('.saved-time')
-        timeDisplay.textContent = dateFormatter(zone);
+        const periodDisplay = li.querySelector('.saved-period')
+        timeDisplay.textContent = dateFormatter(zone).timeVl;
+        periodDisplay.textContent = dateFormatter(zone).periodVl;
     })
 }
 
@@ -323,16 +355,57 @@ input.addEventListener('input', () => {
             div.textContent = item;
             suggestionsBox.appendChild(div);
             
+            
+            // click event for select
             div.addEventListener('click', () => {
                 input.value = item; // update searchBar (city or country)
                 updateText(item);
-
+                
                 const divs = document.querySelectorAll('.suggestions'); //clear all divs
                 divs.forEach(div => div.remove())
             })
-    }})
+        }
+    })
+})
+    
+// input arrow down event
+let eventIndex = -1;
 
-    
-    
+input.addEventListener('keydown', (e) => {
+    const divs = document.querySelectorAll('.suggestions');
+
+    if (e.key === 'ArrowDown') {
+        
+        eventIndex ++;
+        updateHighlights (divs, eventIndex);
+        
+    } else if (e.key === 'ArrowUp') {
+        eventIndex --;
+        updateHighlights (divs, eventIndex);ß
+    } else if (e.key === 'Escape') {
+        eventIndex = -1;
+        suggestionsBox.replaceChildren()            
+    } else if (e.key === 'Enter') {
+        suggestionsBox.replaceChildren()            
+    }
 })
 
+function updateHighlights (divs, idx) {
+    divs.forEach(div => div.classList.remove('highlight'))
+    
+    if (idx >= 0 && idx < divs.length) {
+        divs[idx].classList.add('highlight');
+        input.value = divs[idx].textContent;
+    
+    } else if (idx >= divs.length && divs.length > 0) {
+        divs[0].classList.add('highlight');
+        input.value = divs[0].textContent;
+        return eventIndex = 0;
+    
+    } else if (idx < 0 && divs.length > 0) {
+        divs[divs.length - 1].classList.add('highlight');
+        input.value = divs[divs.length - 1].textContent;
+
+        return eventIndex = divs.length - 1;
+    }
+}
