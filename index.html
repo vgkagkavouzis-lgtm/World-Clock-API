@@ -8,8 +8,8 @@
 </head>
 <body>
     <nav>
-        <div id="12hour">
-            <button></button>
+        <div id="toggle12hour">
+            <button class="btn">12h</button>
         </div>
         <!-- <button class="night-mode"></button> -->
     </nav>
@@ -17,7 +17,7 @@
         <h1>What time is it?</h1>
         <div class="local-time">
             <h4>Local Time:</h4>
-            <p id="localTime">info
+            <p id="localTimeP">
                 <span id="localTime"></span>
                 <span id="localPeriod"></span>
             </p>
@@ -27,7 +27,9 @@
         <div class="input">
             <form action="">
                 <input type="text" placeholder="Search city / country" autocomplete="off" id="searchBar">
-                <div class="suggestions-box"></div>            
+                <div class="suggestions-box">
+                    <!-- <div class="suggestions highlight">sdfsdfsdf</div> -->
+                </div>            
             </form>
             <label for="timeZoneSelect">
                 <select id="timeZoneSelect">
@@ -40,8 +42,8 @@
         <div class="container-display">
             <div class="displays">
                 <p><span id="city">City</span>, <span id="country">Country</span></p>
-                <p id="time">Time
-                    <span id="time"></span>
+                <p id="timeP">
+                    <span id="time">Time</span>
                     <span id="period"></span>
                 </p>
                 <p id="time-zone">Timezone</p>
