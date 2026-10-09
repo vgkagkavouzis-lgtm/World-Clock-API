@@ -16,6 +16,31 @@ body {
     max-width: 35rem;
 }
 
+/* ========buttons=========== */
+
+.btn {
+    border: .05rem solid black;
+    border-radius: .2rem;
+    padding: .3rem .6rem;
+    margin: 1rem;
+    background-color: white;
+    transform: scale(1);
+    transition: translate 100ms ease-in;
+
+}
+
+.btn:active {
+    transform: scale(0.9);
+    transition: translate 100ms ease-in;
+}
+
+/* =======navbar========== */
+nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 /* ====header div====== */
 
 #header {
@@ -24,17 +49,13 @@ body {
     align-items: center;
 }
 
-.local-time {
-    font-size: small;
+#localTime {
+    font-size: 1rem;
 }
 
-
-
-
-
-
-
-
+#localPeriod {
+    font-size: 0.7rem;
+}
 
 
 div.input {
@@ -76,11 +97,19 @@ div.input form input {
 
     border: .05rem solid black;
     border-radius: .2rem;
+    transform: scale(.9);
+    transition: translate 100ms ease-in;
 }
+
+div.input form input:focus {
+    transform: scale(1);
+    transition: translate 100ms ease-in;}
 
 div.input form input::placeholder {
     color: rgb(192, 192, 192);
 }
+
+
 
 div.input .suggestions-box {
     display: flex;
@@ -130,6 +159,10 @@ div.input label select {
     cursor: pointer;
 }
 
+.suggestions.highlight {
+    background-color: rgb(84, 83, 101);
+    color: white;
+}
 
 
 div.container-display {
@@ -147,8 +180,12 @@ div.displays {
 }
 
 
-div.displays #time {
+#time {
     font-size: 3rem;
+}
+
+#period {
+    font-size: .7rem;
 }
 
 div.displays table {
@@ -173,8 +210,13 @@ div.displays table {
     align-items: center;
 }
 
-.btn {
-    margin: .5rem;
+.saved-time {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.saved-period {
+    font-size: .7rem;
 }
 
 
