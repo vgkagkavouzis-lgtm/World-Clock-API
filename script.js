@@ -374,6 +374,7 @@ let eventIndex = -1;
 input.addEventListener('keydown', (e) => {
     const divs = document.querySelectorAll('.suggestions');
 
+    
     if (e.key === 'ArrowDown') {
         
         eventIndex ++;
@@ -396,16 +397,36 @@ function updateHighlights (divs, idx) {
     if (idx >= 0 && idx < divs.length) {
         divs[idx].classList.add('highlight');
         input.value = divs[idx].textContent;
-    
+        
     } else if (idx >= divs.length && divs.length > 0) {
         divs[0].classList.add('highlight');
         input.value = divs[0].textContent;
         return eventIndex = 0;
-    
+        
     } else if (idx < 0 && divs.length > 0) {
         divs[divs.length - 1].classList.add('highlight');
         input.value = divs[divs.length - 1].textContent;
-
+        
         return eventIndex = divs.length - 1;
     }
 }
+
+// mouse hover highlight events
+suggestionsBox.addEventListener('mouseover', (e) => {
+    const divs = document.querySelectorAll('.suggestions');
+
+    divs.forEach((div, i) => {
+        if (e.target.closest('.suggestions') === div) {
+            eventIndex = i;
+            updateHighlights(divs, eventIndex);
+        }
+    });
+})
+
+suggestionsBox.addEventListener('mouseleave', () => {
+    const divs = document.querySelectorAll('.suggestions');
+    divs.forEach(div => div.classList.remove('highlight'))
+    eventIndex = -1;
+});
+
+
