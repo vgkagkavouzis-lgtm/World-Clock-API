@@ -109,6 +109,10 @@ div.input form input::placeholder {
     color: rgb(192, 192, 192);
 }
 
+#inputAutoFill {
+    background-color: rgb(84, 83, 101);
+    color: white;
+}
 
 
 div.input .suggestions-box {
@@ -163,6 +167,11 @@ div.input label select {
     background-color: rgb(84, 83, 101);
     color: white;
 }
+
+/* .suggestions:hover {
+    background-color: rgb(84, 83, 101);
+    color: white;
+} */
 
 
 div.container-display {
