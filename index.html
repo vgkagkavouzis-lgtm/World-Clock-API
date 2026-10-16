@@ -20,19 +20,20 @@
             <p id="localTimeP">
                 <span id="localTime"></span>
                 <span id="localPeriod"></span>
+                <span id="localOffset"></span>
             </p>
         </div>
     </section>
     <section>
         <div class="input">
             <form action="">
-                <input type="text" placeholder="Search city / country" autocomplete="off" id="searchBar">
+                <input type="text" class="inputSelect" placeholder="Search city / country" autocomplete="off" id="searchBar">
                 <div class="suggestions-box">
                     <!-- <div class="suggestions highlight">sdfsdfsdf</div> -->
                 </div>            
             </form>
             <label for="timeZoneSelect">
-                <select id="timeZoneSelect">
+                <select id="timeZoneSelect" class="inputSelect">
                     <option value="Choose a time-zone">Choose a time-zone</option>
                 </select>
             </label>
@@ -45,6 +46,7 @@
                 <p id="timeP">
                     <span id="time">Time</span>
                     <span id="period"></span>
+                    <span id="offset"></span>
                 </p>
                 <p id="time-zone">Timezone</p>
             </div>
@@ -64,12 +66,47 @@
                 <p>
                     <span class="saved-time">Time</span>
                     <span class="saved-period"></span>
+                    <span class="saved-offset"></span>
                     <button class="removeBtn btn">x</button>
                 </p>
             </li>
         </ul>
     </section>
+    <section id="time-converter">
+        <h3>Time Converter</h3>
+        <h5>From</h5>
+        <form action="">
+            <label for="convertFromTimezone">
+                <select class="inputSelect" id="convertFromTimezone" >
+                    <option value="Timezone">Timezone</option>
+                </select>
+            </label>
+            <label for="convertFromDate">Date
+                <input class="inputSelect" id="convertFromDate" type="date" >
+            </label>
+            <label for="convertFromTime">Time
+                <input class="inputSelect " id="convertFromTime" type="time">
+            </label>
+            <h5>To</h5>
+            <label for="convertToTimezone">
+                <select class="inputSelect " id="convertToTimezone" >
+                    <option value="Timezone">Timezone</option>
+                </select>
+            </label>
+        </form>
+        <h5>Result</h5>
+        <ul class="list">
+            <li>
+                <p>
+                    <span class='converted-time'>Time</span>
+                    <span class='converted-date'>Date</span>
+                    <span class="converted-timezone">Timezone</span>
+                </p>
+            </li>
+        </ul>
+    </section>
     <div class="assistant-display">
+        <h3>Output</h3>
         <p>Search something</p>
     </div>
     <script src="script.js"></script>
