@@ -491,6 +491,9 @@ convertForm.addEventListener('input', (e) => {
     if (checkIfFilled(converterInputs)) {
         convertTime();
 
+        convertFromDate.value = '';
+        convertFromTime.value = '';
+
     }
 })
     
