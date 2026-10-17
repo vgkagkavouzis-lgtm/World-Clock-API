@@ -1,4 +1,4 @@
-const formInput = document.querySelector('.input form')
+const formInput = document.querySelector('#main-input-form')
 const suggestionsBox = document.querySelector('.suggestions-box');
 
 const input = document.getElementById('searchBar')
@@ -12,6 +12,7 @@ const timeZone = document.getElementById('time-zone');
 const time = document.getElementById('time'); // searched time
 const period =document.getElementById('period'); // searched period
 const offset = document.getElementById('offset');
+const localZoneDisplay = document.getElementById('localZoneDisplay');
 const localTime = document.getElementById('localTime');
 const localPeriod = document.getElementById('localPeriod');
 const localOffset = document.getElementById('localOffset');
@@ -154,69 +155,69 @@ addLocationBtn.addEventListener('click', (e) => {
         
     })
     
-    // remove list btn
-    savedLocationsUl.addEventListener('click', (e) => {
-        if (e.target.classList.contains('removeBtn')) {
-            const li = e.target.closest('li');
-            
-            savedLocations = savedLocations.filter(
-                item => item.timeZone !== li.dataset.timezone);
-                
-                saveLocations()
-                renderSavedLocations();
-            }
-        })
+// remove list btn
+savedLocationsUl.addEventListener('click', (e) => {
+if (e.target.classList.contains('removeBtn')) {
+    const li = e.target.closest('li');
+    
+    savedLocations = savedLocations.filter(
+        item => item.timeZone !== li.dataset.timezone);
         
-        // 12hour btn
-        btn12h.addEventListener('click', () => {
-            is12hour = !is12hour;
-            
-            localStorage.setItem('is12hour', JSON.stringify(is12hour))
-            
-            btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
-            
-            clearTimeout(timeoutId);
-            getTime();
-        })
-        
-        
-        // =========Local Storage==========
-        
-        // save locations 
-        function saveLocations() {
-            localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
-        }
-        
-        // load AM / Pm
-        function load12hour (){
-            const load12 = JSON.parse(localStorage.getItem('is12hour'));
-            
-            is12hour = load12 ?? true
-            
-            btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
-        }
-        
-        //load locations when page loads
-        function loadLocations() {
-            let storedLocations = localStorage.getItem('savedLocations');
-            
-            if(!storedLocations) return;
-            
-            try {
-                savedLocations = JSON.parse(storedLocations);
-                output.textContent = 'Search something'
+        saveLocations()
+        renderSavedLocations();
+    }
+})
 
-            } catch (error) {
-                output.textContent = error;
-                localStorage.removeItem('savedLocations');
-                savedLocations = [];
-            }
-        }
-        
-        
-        
-        
-        
+// 12hour btn
+btn12h.addEventListener('click', () => {
+    is12hour = !is12hour;
+    
+    localStorage.setItem('is12hour', JSON.stringify(is12hour))
+    
+    btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
+    
+    clearTimeout(timeoutId);
+    getTime();
+})
+
+
+// =========Local Storage==========
+
+// save locations 
+function saveLocations() {
+    localStorage.setItem('savedLocations', JSON.stringify(savedLocations));
+}
+
+// load AM / Pm
+function load12hour (){
+    const load12 = JSON.parse(localStorage.getItem('is12hour'));
+    
+    is12hour = load12 ?? true
+    
+    btn12h.querySelector('button').textContent = is12hour ? '12h' : '24h';
+}
+
+//load locations when page loads
+function loadLocations() {
+    let storedLocations = localStorage.getItem('savedLocations');
+    
+    if(!storedLocations) return;
+    
+    try {
+        savedLocations = JSON.parse(storedLocations);
+        output.textContent = 'Search something'
+
+    } catch (error) {
+        output.textContent = error;
+        localStorage.removeItem('savedLocations');
+        savedLocations = [];
+    }
+}
+
+
+
+
+
 
 
 // render the li for every 'add location' click
@@ -228,31 +229,33 @@ function renderSavedLocations() {
         let p1 = document.createElement('p');
         let p2 = document.createElement('p');
         let span1 = document.createElement('span');
-        let span2 = document.createElement('span');
+        // let span2 = document.createElement('span');
         let span3 = document.createElement('span');
         let span4 = document.createElement('span');
         let span5 = document.createElement('span');
         let btnRemove = document.createElement('button');
 
         li.dataset.timezone = loc.timeZone;
+        p1.classList.add('saved-city-offset');
+        p2.classList.add('saved-time-period-btn')
         span1.classList.add('saved-city');
         span1.textContent = `${loc.cities[0]} `;
-        span2.classList.add('saved-timeZone');
-        span2.textContent = loc.timeZone;
+        // span2.classList.add('saved-timeZone');
+        // span2.textContent = loc.timeZone;
         span3.classList.add('saved-time');
         span3.textContent = dateFormatter(loc.timeZone).timeVl;
         span4.classList.add('saved-period');
         span4.textContent = dateFormatter(loc.timeZone).periodVl;
         span5.classList.add('saved-offset');
-        span5.textContent = ` (${dateFormatter(loc.timeZone).offsetHour}${dateFormatter(loc.timeZone).offsetMin})`
+        span5.textContent = dateFormatter(loc.timeZone).offsetVl;
 
         btnRemove.classList.add('removeBtn', 'btn')
         btnRemove.textContent = 'x';
 
         savedLocationsUl.append(li);
-        li.append(p1, p2);
-        p1.append(span1, span2);
-        p2.append(span3, span4, span5, btnRemove);
+        li.append(p1, p2, btnRemove);
+        p1.append(span1, span5);
+        p2.append(span3, span4);
 
         }
     )
@@ -314,12 +317,10 @@ function dateFormatter (zone) {
 
         let periodVl = formatterZone.find(({type}) => type === 'dayPeriod')?.value;
 
-        let offset = formatterZone.filter(({type}) => type === 'timeZoneName').map(({value}) => value)[0].replace('GMT', '');
-        let offsetHour = offset.split(':')[0];
-        let offsetMin = offset.split(':')[1];
-        offsetMin = offsetMin ? `:${offsetMin}` : '';
+        let offsetVl = formatterZone.filter(({type}) => type === 'timeZoneName').map(({value}) => value)[0];
 
-        return ({timeVl, periodVl, offsetHour, offsetMin})
+
+        return ({timeVl, periodVl, offsetVl})
 }
 
 
@@ -328,15 +329,16 @@ function getTime () {
     clearTimeout(timeoutId);
 
     //get the local time
+    localZoneDisplay.textContent = localZone;
     localTime.textContent = dateFormatter(localZone).timeVl;
     localPeriod.textContent = dateFormatter(localZone).periodVl;
-    localOffset.textContent = `(${dateFormatter(localZone).offsetHour}${dateFormatter(localZone).offsetMin})`
+    localOffset.textContent = dateFormatter(localZone).offsetVl;
 
     if (selectedZone) {
         //update the time
         time.textContent = dateFormatter(selectedZone).timeVl;
         period.textContent = dateFormatter(selectedZone).periodVl;
-        offset.textContent = `(${dateFormatter(selectedZone).offsetHour}${dateFormatter(selectedZone).offsetMin})`
+        offset.textContent = dateFormatter(selectedZone).offsetVl;
     }
 
     //update all list/saved items
@@ -354,7 +356,7 @@ function updateSavedTimes () {
         const zone = li.dataset.timezone;
         li.querySelector('.saved-time').textContent = dateFormatter(zone).timeVl;
         li.querySelector('.saved-period').textContent = dateFormatter(zone).periodVl;
-        li.querySelector('.saved-offset').textContent = `(${dateFormatter(zone).offsetHour}${dateFormatter(zone).offsetMin})`;
+        li.querySelector('.saved-offset').textContent = dateFormatter(zone).offsetVl;
     })
 }
 
@@ -471,6 +473,7 @@ const converterInputs = [convertFromDate, convertFromTime, convertFromTimezone, 
 const convertedDate = document.querySelector('.converted-date');
 const convertedTime = document.querySelector('.converted-time');
 const convertedTimezone = document.querySelector('.converted-timezone');
+const result = [convertedDate, convertedTime, convertedTimezone]
 
 const convertButton = document.getElementById('convert');
 
@@ -490,10 +493,8 @@ function checkIfFilled (inputs) {
 convertForm.addEventListener('input', (e) => {
     if (checkIfFilled(converterInputs)) {
         convertTime();
-
-        convertFromDate.value = '';
-        convertFromTime.value = '';
-
+    } else {
+        result.forEach(p => p.textContent = '');
     }
 })
     
@@ -522,8 +523,11 @@ function convertTime () {
 
 
 
+// ======== Footer ========
 
-
+const footerDate = document.getElementById('footerDate');
+const footerYear =  new Date().getFullYear();
+footerDate.textContent = `${footerYear}`;
 
 loadLocations() // get saved locations from local storage
 load12hour() // recover from local storage am / pm
