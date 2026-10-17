@@ -1,232 +1,248 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600&family=Roboto:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&display=swap');
 
 * {
     box-sizing: border-box;
-    margin: 0rem;
-    padding: 0rem;
-    font-family: 'Roboto', sans-serif;
+}
+
+:root {
+    --border: .09rem solid black;
+    --border-radius: .4rem;
+
+    --sug-box-highlight: rgb(124, 61, 118);
+    --sug-box-background: rgb(249, 189, 243);
+    
+    --normal-color: ;
+    --faded-color: ;
+    --location-btn-background: rgb(66,91,154);
+
+    --faded-bg-color: rgb(213, 216, 255);
+    --whiter-bg-color: rgb(240, 241, 255);
 }
 
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
-    margin: 2rem;
-    max-width: 35rem;
+    gap: 2rem;
+    max-width: 65rem;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: var(--faded-bg-color);
 }
 
-/* ========buttons=========== */
-
-.btn {
-    border: .05rem solid black;
-    border-radius: .2rem;
-    padding: .3rem .6rem;
-    margin: 1rem;
-    background-color: white;
-    transform: scale(1);
-    transition: translate 100ms ease-in;
-
+button, input, select {
+    border: var(--border);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    padding: .6rem;
+    background-color: transparent;
+    background-color: var(--whiter-bg-color);
 }
 
-.btn:active {
-    transform: scale(0.9);
-    transition: translate 100ms ease-in;
+h1 {
+    font-size: 2rem;
+    
 }
 
-/* =======navbar========== */
+h3 {
+    font-size: 1.2rem;
+}
+
+p, label {
+    font-size: 0.9rem;
+}
+
+label {
+    line-height: 2rem;
+}
+
+#time {
+    font-size: 4rem;
+}
+
+#localTime, .saved-time {
+    font-size: 1.2rem;
+}
+
+/* #time,
+#localTime,
+.saved-time,
+.converted-time {
+    font-variant-numeric: tabular-nums;
+} */
+
+h1, h3, h5, h6, p {
+    margin: 0;
+}
+
+.local-time,
+.displays,
+.assistant-display {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+/* ======= Navigation ======= */
+
 nav {
     display: flex;
-    justify-content: flex-end;
+    
 }
 
-
-/* ====header div====== */
-
+/* ==========Header============ */
 #header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
 }
 
-#localTime {
-    font-size: 1rem;
+#header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-#localPeriod {
-    font-size: 0.7rem;
+#title-info {
+    display: flex;
+    flex-direction: column;
+    gap: rem;
+}
+
+#local-time {
+    display: flex;
+    flex-direction: column;
+
 }
 
 
-div.input {
+/* =========Main input - select========== */
+.input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+    flex-wrap: wrap;
     position: relative;
+}
 
+#main-input-form, #main-select-input {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
-    width: 15em;
-    height: 5rem;
-
-    margin: 1 0 1 0rem;
-}
-
-div.input form {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
-    width: 17rem;
-    height: 2rem;
-
-    left: 0;
-    
-}
-
-div.input form input {
-    position: absolute;
-
-    width: 13rem;
-
-    top: 0;
-    left: 0;
-
-    padding: .5rem;
-
-    transform: scale(.9);
-    transition: translate 100ms ease-in;
-}
-
-div.input form input:focus {
-    transform: scale(1);
-    transition: translate 100ms ease-in;}
-
-div.input form input::placeholder {
-    color: rgb(192, 192, 192);
-}
-
-#inputAutoFill {
-    background-color: rgb(84, 83, 101);
-    color: white;
+    width: 20rem;
 }
 
 
-div.input .suggestions-box {
-    display: flex;
-    flex-direction: column;
-    top: 2rem;
-    left: 0;
 
-    width: 17rem;
-    max-height: 14rem;
-    
-    overflow: auto;
-
+.highlight {
+    background-color: var(--sug-box-highlight);
 }
-
-div.input label {
-    display: flex;
-    position: absolute;
-    
-    top: 4rem;
-    left: 0;
-
-    margin: 0;
-    padding: 0;
-
-}
-
-.inputSelect {
-    border: .05rem solid black;
-    border-radius: .2rem;
-    margin: 0;
-    transform: scale(1);
-    transition: translate 100ms ease-in, border 100ms ease-in, color 100ms ease-in;
-}
-
 
 .suggestions-box {
-    display: flex;
     position: absolute;
-    cursor: pointer;
-    top: 2.2rem;
-}
-
-.suggestions {
+    top: 4.5rem;
+    background-color: rgb(254, 192, 192);
+    width: 17rem;
+    max-height: 25rem;
+    overflow-y: auto;
     z-index: 2;
-    padding: .3rem;
-    margin: 0;
-    background-color: white;
-    cursor: pointer;
 }
 
-.suggestions.highlight {
-    background-color: rgb(84, 83, 101);
-    color: white;
-}
-
-/* .suggestions:hover {
-    background-color: rgb(84, 83, 101);
-    color: white;
-} */
-
-
-div.container-display {
+/* ========== Middle Section =========== */
+#middle-section {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    flex-wrap: wrap;
 }
 
-div.displays {
+
+/* ======== Time Display ========= */
+
+#displays {
     display: flex;
     flex-direction: column;
-    max-width: 50%;
-    margin: 2rem 0 4rem 2rem;
+    height: auto;
+    width: 20rem;
+    margin: 2rem 0;
+    padding-bottom: 1rem;
+    border-bottom: var(--border);
 }
 
+#add-location-btn {
+    width: 10rem;
+    background-color: transparent; 
+    margin: 1rem 0;   
+    background-color: var(--location-btn-background);
+    color: white;
+}
+
+#period-offset {
+    display: flex;
+    flex-direction: column;
+}
 
 #time {
-    font-size: 3rem;
+    width: 13rem;
 }
 
-#period {
-    font-size: .7rem;
+#period{
+    position: absolute;
+    top: 3.6rem;
+    left: 17rem;
 }
 
-div.displays table {
-    margin: 3rem;
-}
- /* ========== section saved zones ========== */
 
-.saved-zones-container {
+#timeP {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    position: relative;
+}
+
+#timezone-offset {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+}
+
+/* ========== Saved Zones ======== */
+
+#saved-zones {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-.saved-zones h3, .saved-zones-container, .saved-zones-container li {
-    margin: 0rem;
-} 
-
-.saved-zones-container li {
+.saved-zones-container li{
+    list-style: none;
     display: flex;
-    justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    height: 3rem;
-    margin: 0 0 0 2rem;
+    justify-content: space-between;
+    margin: 1rem 0;
 }
 
-.saved-time {
-    font-size: 1.3rem;
-    font-weight: bold;
+.saved-zones-container {
+    margin: 0;
+    padding: 0;
+}
+
+.saved-city-offset {
+    display: flex;
+    flex-direction: column;
 }
 
 .saved-period {
-    font-size: .7rem;
+    font-size: .6rem;
+}
+
+.removeBtn {
+    padding: .3rem .6rem;
 }
 
 
@@ -234,29 +250,49 @@ div.displays table {
 
 
 
-.assistant-display, .displays, div.input label {
-    z-index: 1;
+
+/* ======== Time Converter ======= */
+
+#time-converter {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    background-color: var(--whiter-bg-color);
+} 
+
+#converter-form, #converter-date-container, #converter-date-container, #converter-time-from-zone-container, #converter-time-to-zone-container {
+    display: flex;
+    flex-direction: column;
 }
 
-
-/* ========== Converter section =========== */
-
-.input-error {
-    border: .2rem solid rgba(159, 5, 224, 0.712);
-    background-color: rgba(215, 142, 247, 0.712);
-    color: black;
-    transform: scale(1.1);
-    transition: translate 100ms ease-in, border 100ms ease-in, color 100ms ease-in;
+#converter-form {
+    margin-bottom: .5rem;
+    gap: .5rem;
 }
 
-#time-converter li {
+#converter-date-time-container {
+    display: flex;
+    flex-direction: row;
+    gap: 3.2rem;
+}
+
+#convertedList {
     list-style: none;
 }
 
-#time-converter p {
+#convertedData {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
-
 }
 
+#convertedList {
+    border-top: var(--border);
+    padding: 1rem 0;
+}
+
+.converted-date {
+    font-size: 2rem;
+}
