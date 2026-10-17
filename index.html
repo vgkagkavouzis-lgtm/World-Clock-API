@@ -11,104 +11,121 @@
         <div id="toggle12hour">
             <button class="btn">12h</button>
         </div>
+        <div id="toggleNightMode">
+            <button class="btn">Day/Night Mode</button>
+        </div>
         <!-- <button class="night-mode"></button> -->
     </nav>
     <section id="header">
-        <h1>What time is it?</h1>
-        <div class="local-time">
-            <h4>Local Time:</h4>
-            <p id="localTimeP">
+        <div id="title-info">
+            <h1>What time is it?</h1>
+            <p>A web app to get any time you need!</p>
+        </div>  
+        <div id="local-time">
+            <p>Local time · <span id="localZoneDisplay"></span></p>
+            <h6 id="localTimeP">
                 <span id="localTime"></span>
                 <span id="localPeriod"></span>
                 <span id="localOffset"></span>
-            </p>
+            </h6>
         </div>
     </section>
-    <section>
+    <section id="main-input-select-container">
         <div class="input">
-            <form action="">
-                <input type="text" class="inputSelect" placeholder="Search city / country" autocomplete="off" id="searchBar">
+            <form action="" id="main-input-form">
+                <label for="">Find a city  </label> 
+                <input type="text" class="inputBox" placeholder="Search city / country" autocomplete="off" id="searchBar">
                 <div class="suggestions-box">
                     <!-- <div class="suggestions highlight">sdfsdfsdf</div> -->
-                </div>            
-            </form>
-            <label for="timeZoneSelect">
-                <select id="timeZoneSelect" class="inputSelect">
+                </div>    
+            </form> 
+            <div id="main-select-input">
+                <label for="timeZoneSelect">Or choose a timezone</label>
+                <select id="timeZoneSelect" class="inputBox">
                     <option value="Choose a time-zone">Choose a time-zone</option>
                 </select>
-            </label>
-        </div>
-    </section>
-    <section id="display-w-btn">
-        <div class="container-display">
-            <div class="displays">
-                <p><span id="city">City</span>, <span id="country">Country</span></p>
-                <p id="timeP">
-                    <span id="time">Time</span>
-                    <span id="period"></span>
-                    <span id="offset"></span>
-                </p>
-                <p id="time-zone">Timezone</p>
-            </div>
-            <div class="add-location">
-                <button class="btn" id="add-location-btn">+ add location</button>
             </div>
         </div>
     </section>
-    <section id="saved-zones">
-        <h3>Saved locations</h3>
-        <ul class="saved-zones-container">
-            <li data-timezone="">
-                <p>
-                    <span class="saved-city">City </span>
-                    <span class="saved-timeZone">Timezone</span>
-                </p>
-                <p>
-                    <span class="saved-time">Time</span>
-                    <span class="saved-period"></span>
-                    <span class="saved-offset"></span>
-                    <button class="removeBtn btn">x</button>
-                </p>
-            </li>
-        </ul>
-    </section>
-    <section id="time-converter">
-        <h3>Time Converter</h3>
-        <h5>From</h5>
-        <form action="">
-            <label for="convertFromTimezone">
-                <select class="inputSelect" id="convertFromTimezone" >
-                    <option value="Timezone">Timezone</option>
-                </select>
-            </label>
-            <label for="convertFromDate">Date
-                <input class="inputSelect" id="convertFromDate" type="date" >
-            </label>
-            <label for="convertFromTime">Time
-                <input class="inputSelect " id="convertFromTime" type="time">
-            </label>
-            <h5>To</h5>
-            <label for="convertToTimezone">
-                <select class="inputSelect " id="convertToTimezone" >
-                    <option value="Timezone">Timezone</option>
-                </select>
-            </label>
-        </form>
-        <h5>Result</h5>
-        <ul class="list">
-            <li>
-                <p>
-                    <span class='converted-time'>Time</span>
-                    <span class='converted-date'>Date</span>
-                    <span class="converted-timezone">Timezone</span>
-                </p>
-            </li>
-        </ul>
+    <section id="middle-section">
+        <section id="display-w-btn">
+            <div class="container-display">
+                <div id="displays">
+                    <h3><span id="city">City</span>, <span id="country">Country</span></h3>
+                    <div id="timeP">
+                        <p id="time">Time</p>
+                        <p id="period"> Period</p>
+                    </div>
+                    <div id="timezone-offset">
+                        <p id="time-zone">Timezone</p>
+                        <p>·</p>
+                        <p id="offset">Offset</p>  
+                    </div>
+                    <button class="btn" id="add-location-btn">+ add location</button>
+    
+            </div>
+            <div id="saved-zones">
+    
+                <h3>Saved locations</h3>
+                <ul class="saved-zones-container">
+                    <li data-timezone="">
+                        <p class="saved-city-offset">
+                            <span class="saved-city">City </span>
+                            <span class="saved-offset"></span>
+                        </p>
+                        <p id="saved-time-period">
+                            <span class="saved-time">Time </span>
+                            <span class="saved-period"> </span>
+                        </p>
+                        <button class="removeBtn btn">x</button>
+                    </li>
+                </ul>
+            </div>
+    
+        </section>
+        <section id="time-converter">
+            <h3>Time Converter</h3>
+            <form action="" id="converter-form">
+                <div id="converter-time-from-zone-container">
+                    <label for="convertFromTimezone">From</label>
+                        <select class="input-converter" id="convertFromTimezone" >
+                            <option value="Timezone">Timezone</option>
+                        </select>
+                </div>
+                <div id="converter-date-time-container">
+                    <div id="converter-date-container">
+                        <label for="convertFromDate">Date</label>
+                        <input class="inputBox" id="convertFromDate" type="date" >
+                    </div>
+                    <div id="converter-date-container">
+                        <label for="convertFromTime">Time</label>
+                        <input class="inputBox" id="convertFromTime" type="time">
+                    </div>
+                </div>
+                <div id="converter-time-to-zone-container">
+                    <label for="convertToTimezone">To</label>
+                        <select class="inputBox" id="convertToTimezone" >
+                            <option value="Timezone">Timezone</option>
+                        </select>
+                </div>
+            </form>
+            <ul class="list" id="convertedList">
+                <li>
+                    <label for=""></label>
+                    <p id="convertedData">
+                        <span class='converted-time'>Time</span>
+                        <span class='converted-date'>Date</span>
+                        <span class="converted-timezone">Timezone</span>
+                    </p>
+                </li>
+            </ul>
+        </section>
     </section>
     <div class="assistant-display">
         <h3>Output</h3>
         <p>Search something</p>
     </div>
+    <footer>V. Gkagkavouzis <span id="footerDate"></span> &copy;</footer>
     <script src="script.js"></script>
 </body>
 </html>
